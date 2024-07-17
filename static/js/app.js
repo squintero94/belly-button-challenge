@@ -3,7 +3,7 @@ function buildMetadata(sample) {
   d3.json("https://static.bc-edx.com/data/dl-1-2/m14/lms/starter/samples.json").then((data) => {
 
     // get the metadata field
-    let metadata = [];
+    let metadata = data.metadata;
 
     // Filter the metadata for the object with the desired sample number
     metadata = data.metadata.filter(obj => obj.id === sample);
@@ -92,21 +92,27 @@ function init() {
   d3.json("https://static.bc-edx.com/data/dl-1-2/m14/lms/starter/samples.json").then((data) => {
 
     // Get the names field
-
+    let names = data.names;
 
     // Use d3 to select the dropdown with id of `#selDataset`
+    let dataset = d3.select("#selDataset");
 
 
     // Use the list of sample names to populate the select options
     // Hint: Inside a loop, you will need to use d3 to append a new
     // option for each sample name.
-
+    names.forEach((name) => {
+      dropdown.append("option")
+        .text(name)
+        .attr("value", name);
+    });
 
     // Get the first sample from the list
-
+    let first_sample = (names[0]);
 
     // Build charts and metadata panel with the first sample
-
+    buildMetadata(first_sample);
+    buildCharts(first_sample);
   });
 }
 
