@@ -95,31 +95,38 @@ function init() {
     let names = data.names;
 
     // Use d3 to select the dropdown with id of `#selDataset`
-    let dataset = d3.select("#selDataset");
+    let dropdown = d3.select("#selDataset");
 
 
     // Use the list of sample names to populate the select options
     // Hint: Inside a loop, you will need to use d3 to append a new
     // option for each sample name.
     names.forEach((name) => {
-      dataset.append("option")
+      dropdown.append("option")
         .text(name)
         .attr("value", name);
     });
 
     // Get the first sample from the list
-    let first_sample = (names[0]);
+    let first_sample = names[0];
 
     // Build charts and metadata panel with the first sample
     buildMetadata(first_sample);
     buildCharts(first_sample);
+
+    // Attach event listener to the dropdown to call optionChanged function
+    dropdown.on("change", function() {
+      let newSample = dropdown.property("value");
+      optionChanged(newSample);
+    });
   });
 }
 
 // Function for event listener
 function optionChanged(newSample) {
   // Build charts and metadata panel each time a new sample is selected
-
+  buildMetadata(newSample);
+  buildCharts(newSample);
 }
 
 // Initialize the dashboard
