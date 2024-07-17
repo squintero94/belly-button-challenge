@@ -50,7 +50,6 @@ function buildCharts(sample) {
       }
     };
 
-    let data = [trace];
 
     let layout = {
       title: 'Bubble Chart',
@@ -59,7 +58,7 @@ function buildCharts(sample) {
     };
 
     // Render the Bubble Chart
-    Plotly.newPlot('bubble', data, layout);
+    Plotly.newPlot('bubble', trace, layout);
 
     // For the Bar Chart, map the otu_ids to a list of strings for your yticks
     let yticks = otuIds.map(id => `OTU ${id}`);
