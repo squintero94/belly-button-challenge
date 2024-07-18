@@ -58,7 +58,7 @@ function buildCharts(sample) {
     };
 
     // Render the Bubble Chart
-    Plotly.newPlot('bubble', trace, layout);
+    Plotly.newPlot('bubble', [trace], layout);
 
     // For the Bar Chart, map the otu_ids to a list of strings for your yticks
     let yticks = otuIds.map(id => `OTU ${id}`);
@@ -66,7 +66,7 @@ function buildCharts(sample) {
     // Build a Bar Chart
     // Don't forget to slice and reverse the input data appropriately
     let trace_bar = {
-      x: sampleValues.slice(0, 10), // Use the top 10 sample values
+      x: sampleValues.slice(0, 10).sort((a, b) => b - a), // Use the top 10 sample values
       y: yticks.slice(0, 10), // Use the top 10 OTU IDs as labels
       text: otuLabels.slice(0, 10), // Use the top 10 OTU labels as hovertext
       type: 'bar',
