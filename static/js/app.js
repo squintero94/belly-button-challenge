@@ -2,23 +2,29 @@
 function buildMetadata(sample) {
   d3.json("https://static.bc-edx.com/data/dl-1-2/m14/lms/starter/samples.json").then((data) => {
 
-    // get the metadata field
+    // Get the metadata field
     let metadata = data.metadata;
 
     // Filter the metadata for the object with the desired sample number
-    metadata = data.metadata.filter(obj => obj.id === sample);
+    metadata = data.metadata.filter(obj => obj.id === parseInt(sample));
 
     // Use d3 to select the panel with id of `#sample-metadata`
     let sample_data = d3.select("#sample-metadata");
 
-    // Use `.html("") to clear any existing metadata
+    // Use `.html("")` to clear any existing metadata
     sample_data.html("");
 
-    // Inside a loop, you will need to use d3 to append new
-    // tags for each key-value in the filtered metadata.
-    Object.entries(metadata[0]).forEach(([key, value]) => {
-      sample_data.append("p").text(`${key}: ${value}`);
-    });
+    // Check if metadata array is not empty
+    if (metadata.length > 0) {
+      // Inside a loop, use d3 to append new tags 
+      // for each key-value in the filtered metadata.
+      Object.entries(metadata[0]).forEach(([key, value]) => {
+        sample_data.append("p").text(`${key}: ${value}`);
+      });
+    } else {
+      // If no metadata found, display a message
+      sample_data.append("p").text("No metadata found for this sample.");
+    }
   });
 }
 
